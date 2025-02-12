@@ -1,5 +1,6 @@
 package vttp.batch5.groupb.day28_workshop.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 import vttp.batch5.groupb.day28_workshop.services.GamesService;
@@ -39,5 +42,17 @@ public class GamesController {
         JsonObject resp = opt.get();
 
         return ResponseEntity.ok().body(resp.toString());
+    }
+
+    @GetMapping(path="/games/highest", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getGamesWithHighestRating() {
+        List<JsonObject> gamesList = gamesSvc.getGamesWithHighestRating();
+        JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
+        
+        for (JsonObject game : gamesList) {
+            arrBuilder.add(game);
+        }
+
+        return ResponseEntity.ok().body(arrBuilder.build().toString());
     }
 }

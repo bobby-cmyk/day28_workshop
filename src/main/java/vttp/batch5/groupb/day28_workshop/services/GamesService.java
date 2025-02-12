@@ -2,6 +2,7 @@ package vttp.batch5.groupb.day28_workshop.services;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -39,5 +40,9 @@ public class GamesService {
         JsonObject newJsonObj = builder.build();
 
         return Optional.of(newJsonObj);
+    }
+
+    public List<JsonObject> getGamesWithHighestRating() {
+        return gamesRepo.getGamesWithHighestRating();
     }
 }
